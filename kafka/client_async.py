@@ -933,8 +933,9 @@ class KafkaClient(object):
             except socket.timeout:
                 log.warning('Timeout to send to wakeup socket!')
                 raise Errors.KafkaTimeoutError()
-            except socket.error:
+            except socket.error as e:
                 log.warning('Unable to send to wakeup socket!')
+                raise e
 
     def _clear_wake_fd(self):
         # reading from wake socket should only happen in a single thread
